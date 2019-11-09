@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Index</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</head>   
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand latitude" href="index.html">Lattitude</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+		<div class="navbar-nav ml-auto">
+			<div class="nav-item dropdown">
+				<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Plots</a>
+				<div class="dropdown-menu">
+					<a href="visualization-image-1.html" class="dropdown-item">Max Temperature</a>
+					<a href="visualization-image-2.html" class="dropdown-item">Humidity</a>
+					<a href="visualization-image-3.html" class="dropdown-item">Cloudiness</a>
+					<a href="visualization-image-4.html" class="dropdown-item">Wind Speed</a>
+				</div>
+			</div>
+			<a href="comparisons.html" class="nav-item nav-link active">Comparision</a>
+			<a href="data.html" class="nav-item nav-link">Data</a>			
+		</div>
+      </div>
+    </nav>
+        
+	<div class="content" style="padding-top: 20px;">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12 col-md-8">
+					<div class="box">
+						<div class="page-header">
+							<h1 class="title">Summary: Latitude vs. X</h1>
+						</div>
+                            <div style="margin: 50px;">
+                            	<div>
+									<img src="./assets/resources/Fig1.png" alt="Latitude vs. Max Temperature" height="300" width="320" align="left">
+								</div>
+								<div class="clearfix" style="padding-top: 50px;">
+									<p>The purpose of this project was to analyze how weather changes as you get closer to the equater. To accomplish this analysis. we first pulled data from the OpenWeatherMapAPI to assemble a dataset on over 500 cities.</p>
+									
+									<p>After assembling the dataset, we used Matplotlib to plot various aspects of the weather vs. latitude. Factors we looked at included:temperature, cloudiness, windspeed, and humidity. This site provides the source data and visualizations created as part of the analysis,as well as explanations and descriptions of any trends and correlations witnessed.</p>
+								</div>					
+                            </div>
+					</div>
+				</div>
+
+				<div class="col-sm-12 col-md-4">
+					<div class="box">
+						<div class="page-header">
+							<h1 class="title">Visualizations</h1>
+						</div>
+						<div class="box">
+						   <a href="./visualization-image-1.html"><img src="./assets/resources/Fig1.png" alt="Latitude vs. Max Temperature" height="160" width="160"></a>
+						   <a href="./visualization-image-2.html"><img src="./assets/resources/Fig2.png" alt="Latitude vs. Humidity" height="160" width="160"></a>
+						   <a href="./visualization-image-3.html"><img src="./assets/resources/Fig3.png" alt="Latitude vs. Cloudiness" height="160" width="160"></a>
+						   <a href="./visualization-image-4.html"><img src="./assets/resources/Fig4.png" alt="Latitude vs. Wind Speed" height="160" width="160"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div style="background: #007bff; height: 5px;"></div>
+		<div class="card-footer footerDiv">
+
+			<div style="text-align: center;vertical-align: middle;">
+				<strong>&copy;Copyright Hanh Le
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>
+   
+          
