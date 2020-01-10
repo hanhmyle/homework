@@ -1,0 +1,123 @@
+
+var usgsUrl = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+
+function markerSize(magnitude) {
+  return magnitude * 5;
+}
+
+function colorScale(magnitude) {
+  return magnitude >= 5 ? '#D73027':
+         magnitude >= 4 ? '#FC8D59':
+         magnitude >= 3 ? '#FEE08B':
+         magnitude >= 2 ? '#D9EF8B':
+         magnitude >= 1 ? '#91CF60':
+                          '#1A9850';
+}
+
+function createFeatures(earthquakeData) {
+  function popUpText(feature, layer) {
+    layer.bindPopup("<h3>" + feature.properties.place +
+      "</h3><hr><p>" + new Date(feature.properties.time) + "</p>" +
+      "<p>Magnitude: " + feature.properties.mag + "</p>" +
+      "<p>Type: " + feature.properties.type + "</p>");
+  }
+  
+  // Basic marker features
+  var baseMarkerOptions = {
+    color: '#191919',
+    weight: 1,
+    fillOpacity: 0.9
+  }
+
+  var earthquakes = L.geoJSON(earthquakeData, {
+    pointToLayer: function (feature, latlng) {
+      return L.circleMarker(latlng, baseMarkerOptions);
+    }, 
+    style: function(feature) {
+      return {
+        radius: markerSize(feature.properties.mag),
+        fillColor: colorScale(feature.properties.mag)
+      }
+    },
+    onEachFeature: popUpText
+  });
+
+  createMapForThisData(earthquakes);
+}
+
+
+function createMapForThisData(earthquakes) {
+  
+  // Basemap layers
+  var satellitemap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors,\
+     <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "mapbox.satellite",
+    accessToken: API_KEY
+    });
+
+  var lightmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors,\
+     <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "mapbox.light",
+    accessToken: API_KEY
+    });
+
+  var outdoorsmap = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}", {
+    attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors,\
+     <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+    maxZoom: 18,
+    id: "mapbox.outdoors",
+    accessToken: API_KEY
+    });
+
+  // Object to hold the base layers
+  var baseMaps = {
+    "Satellite": satellitemap,
+    "Grayscale": lightmap,
+    "Outdoors": outdoorsmap
+  };
+
+
+  var overlayMaps = {
+    "Earthquakes": earthquakes
+  };
+
+  // Create map object
+  var myMap = L.map("map", {
+    center: [39.83333, -98.58333],
+    zoom: 5,
+    layers: [satellitemap, earthquakes]
+  });
+
+  // Layer control
+  L.control.layers(baseMaps, overlayMaps, {
+    collapsed: false
+  }).addTo(myMap);
+
+  // Create legend
+  var info = L.control({
+    position: 'bottomright'
+  });
+
+  // Insert 'legend' div when layer control is added
+  info.onAdd = function(){
+    labels = ['0-1', '1-2', '2-3', '3-4', '4-5', '5+']
+    var div = L.DomUtil.create('div', 'legend');
+    div.innerHTML += '<h3>Magnitude</h3>'
+    for (var i = 0; i <= 5; i++) {
+      div.innerHTML += '<p><span style="font-size:20px; background-color:' + colorScale(i) +
+        ';">&nbsp;&nbsp;&nbsp;&nbsp;</span> ' + labels[i] + '</p>';
+    }
+    
+    return div;
+  };
+
+  info.addTo(myMap);
+}
+
+d3.json(usgsUrl, function(data) {
+  createFeatures(data.features);
+});
